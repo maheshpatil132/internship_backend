@@ -25,7 +25,7 @@ const io = new Server(server, {
   }
 })
 
-app.use(cors({credentials:true,origin:'http://localhost:3000'}))
+app.use(cors({credentials:true,origin:'*'}))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
 app.use(body.json())
@@ -92,6 +92,9 @@ app.use(GetAllQuotes)
 app.use(GetQuote)
 app.use(AdminAccepted)
 
+app.get('/',(req,res,next)=>{
+  res.send('hello')
+})
 
 app.use(error)
 connectDatabase(app, PORT)
