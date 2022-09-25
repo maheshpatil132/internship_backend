@@ -16,6 +16,10 @@ const OrderModel = mongoose.Schema({
       type: Number,
       required:true
    },
+   buyer_pincode:{
+     type:Number,
+     required:true
+   },
    remark: {
       type: String,
    }, 
