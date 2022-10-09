@@ -89,11 +89,21 @@ exports.rejectseller = catchaysnc(async(req,res,next)=>{
 exports.addproduct = catchaysnc(async(req,res,next)=>{
 
   const addreq = req.body
-  const user = await SellerModel.findById(addreq.seller)
-  const products = await ProductModel.findById(addreq.product)
+  const user = await SellerModel.findByIdAndUpdate(addreq.seller , {$push:{
+    products : addreq.product
+  }} , {new:true})
+  const products = await ProductModel.findByIdAndUpdate(addreq.product ,{$push:{
+     sellers: addreq.seller
+  }} , {new:true})
   
-  await user.products.push(addreq.product)
-  products.sellers.push(addreq.seller)
+   
+  if(!user){
+    return next(new Errorhandler('seller not exist',404))
+  }
+
+  if(!products){
+    return next(new Errorhandler('product not exist',404))
+  }
    await user.save()
    await products.save()
    

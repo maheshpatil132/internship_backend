@@ -6,7 +6,7 @@ const cors = require('cors')
 const { Server } = require('socket.io')
 const connectDatabase = require('./configure/database');
 const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuyer, DeleteBuyer, GetBuyerBids, AutoLogin } = require('./routes/BuyerRoutes');
-const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct } = require('./routes/ProductRoutes');
+const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct } = require('./routes/ProductRoutes');
 const error = require('./middleware/error');
 const cookieParser = require("cookie-parser");
 const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest ,Sellerquote ,Getsingleseller, Getallsellerquote} = require('./routes/sellerRoutes');
@@ -44,6 +44,9 @@ app.use(GetallProduct)
 app.use(GetSingleProduct)
 app.use(UpdateProduct)
 app.use(DeleteProduct)
+app.use(UpdateManyProduct)
+
+
 
 
 // buyer's Route

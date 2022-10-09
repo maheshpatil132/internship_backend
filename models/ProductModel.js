@@ -8,7 +8,7 @@ const Products = new Schema({
     },
     desc: {
         type: String,
-        required:true,
+       
     },
     documents: {
         type: String,
@@ -22,7 +22,7 @@ const Products = new Schema({
     },
     category:{
         type:String,
-        required:true
+        
     }
 });
 

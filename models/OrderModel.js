@@ -22,6 +22,7 @@ const OrderModel = mongoose.Schema({
    },
    remark: {
       type: String,
+      default:'No remarks'
    }, 
    winner:[{
       seller:{

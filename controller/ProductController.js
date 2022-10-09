@@ -28,9 +28,9 @@ exports.getallproduct = catchaysnc(async(req,res,next)=>{
 // single product
 exports.getsingleproduct = catchaysnc(async(req,res,next)=>{
     const {id} = req.params
-    const product = await db.findById({_id:id}).populate('sellers',{name:1})
+    const product = await db.findById(id).populate('sellers',{name:1})
     if(!product){
-       return next(new Errorhandler('product found',404))
+       return next(new Errorhandler('product not found',404))
     }
     res.json({
         sucess:true,
@@ -53,6 +53,19 @@ exports.updateProduct = catchaysnc(async (req, res, next) => {
     })
 })
 
+// update many product
+exports.updatemanyproduct = catchaysnc(async (req, res, next) => {
+  
+  const product = await db.updateMany({}, req.body, { new: true });
+  if (!product) {
+    return next(new Errorhandler("Product Not Found", 404))
+  }
+  res.json({
+    success: true,
+    message: "product updated successfully",
+    product
+  })
+})
 
 // delete product
 exports.deleteProduct =catchaysnc( async (req, res, next) => {

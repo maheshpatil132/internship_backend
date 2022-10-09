@@ -111,7 +111,6 @@ exports.deletebuyer = catchaysnc(async(req,res,next)=>{
 
 
 exports.getallBuyerBids = catchaysnc(async(req,res,next)=>{
- 
   const buyerbids = await db.findById(req.user._id, { bids:1 } ).populate('bids').populate([
     { 
       path: 'bids', 

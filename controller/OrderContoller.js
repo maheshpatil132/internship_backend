@@ -2,17 +2,21 @@ const { default: mongoose } = require("mongoose");
 const { catchaysnc } = require("../middleware/catchaysnc");
 const db = require("../models/OrderModel");
 const BuyerModel = require("../models/BuyerModel");
+const ProductModel = require("../models/ProductModel");
+
 
 const Errorhandler = require("../utils/errorhandler");
 
 
 // create
 exports.createorder = catchaysnc(async (req, res, next) => {
-    const { product, quantity } = req.body
+    const { product, quantity , buyer_pincode , remark} = req.body
     const data = {
         buyer: req.user._id,
         product,
-        quantity
+        quantity,
+        buyer_pincode,
+        remark
     }
     const order = new db({ ...data })
    
@@ -20,6 +24,13 @@ exports.createorder = catchaysnc(async (req, res, next) => {
     const buyer = await BuyerModel.findByIdAndUpdate(req.user._id , {$push:{
         bids : order._id
     }})
+   
+    console.log(product)
+    const prod = await ProductModel.findById(product)
+
+    if(!prod){
+        return next(new Errorhandler('product not exist',404))
+    }
 
     if(!buyer){
         return next(new Errorhandler("buyer not found", 404))
@@ -113,7 +124,7 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
 
 // get all order
 exports.getallorders = catchaysnc(async (req, res, next) => {
-    const orders = await db.find({}).populate('product',{name:1,_id:1})
+    const orders = await db.find({}).sort({'createdAt':-1}).populate('product',{name:1,_id:1})
     res.status(200).json({
         success: true,
         orders
