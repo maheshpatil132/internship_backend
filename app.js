@@ -19,7 +19,7 @@ const app = express()
 const server = http.createServer(app)
  
 
-app.use(cors({credentials:true,origin:'https://maqure.in'}))
+app.use(cors({credentials:true,origin:'https://www.maqure.in'}))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
 app.use(body.json())
