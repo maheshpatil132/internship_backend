@@ -8,8 +8,8 @@ const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuye
 const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct } = require('./routes/ProductRoutes');
 const error = require('./middleware/error');
 const cookieParser = require("cookie-parser");
-const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest ,Sellerquote ,Getsingleseller, Getallsellerquote} = require('./routes/sellerRoutes');
-const { CreateAdmin, LoginAdmin, ApproveSeller, RejectSeller, AddProduct, GetAllSellerRequest, GetAllProdRequest , Rejectorder, Adminclickprocess, Sendrfqadmin, Adminupdateprice } = require('./routes/AdminRoutes');
+const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote } = require('./routes/sellerRoutes');
+const { CreateAdmin, LoginAdmin, ApproveSeller, RejectSeller, AddProduct, GetAllSellerRequest, GetAllProdRequest, Rejectorder, Adminclickprocess, Sendrfqadmin, Adminupdateprice } = require('./routes/AdminRoutes');
 const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, SellerUpdates, GetAllQuotes, GetQuote, AdminAccepted } = require('./routes/OrderRoutes');
 
 
@@ -17,9 +17,11 @@ const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, Se
 
 const app = express()
 const server = http.createServer(app)
- 
 
-app.use(cors({credentials:true,origin:['http://localhost:3000' , 'https://maqure.in' , 'https://maqure.netlify.app/'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+
+app.use(cors({
+  credentials: true, origin: ['http://localhost:3000', 'https://maqure.in', 'https://maqure.netlify.app/'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+  exposedHeaders: ['*', 'Authorization', ]
 }))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
@@ -92,7 +94,7 @@ app.use(GetAllQuotes)
 app.use(GetQuote)
 app.use(AdminAccepted)
 
-app.get('/',(req,res,next)=>{
+app.get('/', (req, res, next) => {
   res.send('hello')
 })
 
