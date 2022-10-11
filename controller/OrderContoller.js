@@ -186,7 +186,8 @@ exports.addminaccepted = catchaysnc(async(req,res,next)=>{
   }]
 
   const order = await db.findByIdAndUpdate(req.params.id,{$set:{
-   winner:arr
+   winner:arr,
+   quote_status:'accepted'
   }} , {new:true})
 
   if(!order){
