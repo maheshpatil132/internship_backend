@@ -3,7 +3,7 @@ const db = require("../models/SellerModel");
 const admin = require("../models/AdminModel")
 const Errorhandler = require("../utils/errorhandler");
 const sendtoken = require("../utils/jwttoken");
-
+const OrderModel = require("../models/OrderModel");
 
 
 // create seller
