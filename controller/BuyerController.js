@@ -58,6 +58,7 @@ exports.loginbuyer = catchaysnc(async(req,res,next)=>{
     return next(new Errorhandler('Invalid Email or Password'), 404)
   }
   //create token and store it in cookie
+
   sendtoken(user, 200, res);
 })
 

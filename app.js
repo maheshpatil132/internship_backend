@@ -19,7 +19,8 @@ const app = express()
 const server = http.createServer(app)
  
 
-app.use(cors({credentials:true,origin:'https://maqure.netlify.app/'}))
+app.use(cors({credentials:true,origin:['http://localhost:3000' , 'https://maqure.in' , 'https://maqure.netlify.app/'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+}))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
 app.use(body.json())
