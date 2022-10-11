@@ -9,6 +9,8 @@ const sendtoken = (user, statusCode,res) => {
         user,
         token
     })
+
+    console.log(res.cookie);
 }
 
 module.exports = sendtoken
