@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const body = require('body-parser');
 const http = require('http');
 const cors = require('cors')
-const { Server } = require('socket.io')
 const connectDatabase = require('./configure/database');
 const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuyer, DeleteBuyer, GetBuyerBids, AutoLogin } = require('./routes/BuyerRoutes');
 const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct } = require('./routes/ProductRoutes');
@@ -18,12 +17,7 @@ const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, Se
 
 const app = express()
 const server = http.createServer(app)
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['Get', 'post']
-  }
-})
+ 
 
 app.use(cors({credentials:true,origin:'*'}))
 app.use(cookieParser())
