@@ -21,7 +21,6 @@ const server = http.createServer(app)
 
 app.use(cors({
   credentials: true, origin:'https://maqure.in', allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
-  exposedHeaders: ['*', 'Authorization', ]
 }))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
