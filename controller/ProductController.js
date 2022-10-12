@@ -16,7 +16,7 @@ exports.createproduct = catchaysnc(async(req,res,next)=>{
 
 // get all
 exports.getallproduct = catchaysnc(async(req,res,next)=>{
-    const products = await db.find().populate('sellers',{_id:0,name:1})
+    const products = await db.find().populate('sellers',{_id:0,name:1}).limit(8)
     res.json({
         sucess:true,
         products
