@@ -5,7 +5,7 @@ const http = require('http');
 const cors = require('cors')
 const connectDatabase = require('./configure/database');
 const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuyer, DeleteBuyer, GetBuyerBids, AutoLogin } = require('./routes/BuyerRoutes');
-const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct } = require('./routes/ProductRoutes');
+const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct, Get8Product } = require('./routes/ProductRoutes');
 const error = require('./middleware/error');
 const cookieParser = require("cookie-parser");
 const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote } = require('./routes/sellerRoutes');
@@ -37,6 +37,7 @@ const PORT = process.env.PORT || 5000
 // product routes
 app.use(CreateProduct)
 app.use(GetallProduct)
+app.use(Get8Product)
 app.use(GetSingleProduct)
 app.use(UpdateProduct)
 app.use(DeleteProduct)
