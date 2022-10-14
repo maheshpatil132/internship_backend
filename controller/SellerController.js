@@ -141,7 +141,7 @@ exports.getsingleseller = catchaysnc(async(req,res,next)=>{
 
 // getall sellers
 exports.getsellers = catchaysnc(async(req,res,next)=>{
-    const sellers = await db.find()
+    const sellers = await db.find({})
     res.json({
         sucess:true,
         sellers
