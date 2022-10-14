@@ -26,8 +26,17 @@ const AdminModel = mongoose.Schema({
   },
   sellerReq: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'seller'
+      email:{
+        type:String,
+        required:true
+      },
+      mobile:{
+        type:Number,
+        length:10
+      },
+      companyName:{
+        type:String
+      }
     }
   ],
   AddprodReq: [
@@ -45,7 +54,55 @@ const AdminModel = mongoose.Schema({
       }]
     },
 
-  ]
+  ],
+  NewprodReq:[{
+    seller:[{
+      type: mongoose.SchemaTypes.ObjectId,
+      ref:'seller'
+    }],
+
+    productName:{
+      type:String,
+      required:true
+    },
+    Substance:{
+      type:String,
+      required:true
+    },
+    CASNumber:{
+      type:String,
+      required:true
+    },
+   ECNumber:{
+      type:String,
+      required:true
+    },
+    MinPurity:{
+      type:String,
+      required:true
+    },
+    Color:{
+      type:String,
+      required:true
+    },
+    Apperance:{
+      type:String,
+      required:true
+    },
+    Category:{
+      type:String,
+      required:true
+    },
+    Proddecr:{
+      type:String,
+      required:true
+    },
+    ProductSynonyms:{
+      type:String,
+      required:true
+    }
+
+  }]
 
 })
 

@@ -81,7 +81,7 @@ const OrderModel = mongoose.Schema({
    },
    order_status: {
       type: String,
-      default: "preparing"
+      default: null
    },
    query: {
       type: String

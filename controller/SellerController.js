@@ -4,27 +4,51 @@ const admin = require("../models/AdminModel")
 const Errorhandler = require("../utils/errorhandler");
 const sendtoken = require("../utils/jwttoken");
 const OrderModel = require("../models/OrderModel");
+const AdminModel = require("../models/AdminModel");
+
+
+
+
+// send create request
+exports.signuprequest = catchaysnc(async(req,res,next)=>{
+  const email = "hiren@gmail.com"
+  const request = await admin.findOneAndUpdate({email:email},
+      {
+        $push:{
+          sellerReq : {...req.body}
+        }
+      }
+    )
+
+   if(!request){
+    return next(new Errorhandler("admin not found" , 404))
+   }
+    res.status(200).json({
+      success:true,
+      message:"your request submited"
+    })
+})
+
 
 
 // create seller
 exports.createseller = catchaysnc(async(req,res,next)=>{
     const seller = new db({...req.body})
     await seller.save()
-    // send request
-    const email = "hiren@gmail.com"
-    const request = await admin.findOne({email:email})
-
-    if(!request){
-      return next(new Errorhandler("not",404))
-    }
-
-    await request.sellerReq.push(seller._id)
-     await request.save()
-
+  
+    // time to delete the seller req
+    const admin = await AdminModel.findOneAndUpdate({email:"hiren@gmail.com"},{
+      $pull:{
+        sellerReq:{
+          email:req.body.email
+        }
+      }
+    })
+  
       res.status(200).json({
         success:true,
-        message:"your request submited",
-        request
+        message:"New seller successfully created",
+        seller
       })
 })
 
@@ -151,25 +175,7 @@ exports.getsellers = catchaysnc(async(req,res,next)=>{
 
 
 
-// send create request
-exports.signuprequest = catchaysnc(async(req,res,next)=>{
-    const email = "hiren@gmail.com"
-    const request = await admin.findOneAndUpdate({email:email},
-        {
-          $push:{
-            sellerReq : {...req.body}
-          }
-        }
-      )
 
-     if(!request){
-      return next(new Errorhandler("admin not found" , 404))
-     }
-      res.status(200).json({
-        success:true,
-        message:"your request submited"
-      })
-})
 
 
 // seller Qvotoes
