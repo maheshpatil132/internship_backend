@@ -20,7 +20,7 @@ const server = http.createServer(app)
 
 
 app.use(cors({
-  credentials: true, origin:['http://localhost:3000','https://www.maqure.in' , 'https://maqure.in'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+  credentials: true, origin:['http://localhost:3000','https://www.maqure.in' , 'https://maqure.in', 'http://127.0.0.1:5500'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
 }))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
