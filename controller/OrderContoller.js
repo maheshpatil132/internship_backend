@@ -124,7 +124,7 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
 
 // get all order
 exports.getallorders = catchaysnc(async (req, res, next) => {
-    const orders = await db.find({}).sort({'createdAt':-1}).populate('product',{name:1,_id:1})
+    const orders = await db.find({}).sort({'createdAt':-1}).populate('product',{name:1,_id:1}).populate('buyer',{name:1})
     res.status(200).json({
         success: true,
         orders
