@@ -36,22 +36,28 @@ const AdminModel = mongoose.Schema({
       },
       companyName:{
         type:String
-      }
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     }
   ],
   AddprodReq: [
 
 
     {
-      seller: [{
+      seller: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'seller',
-      }],
+        required:true
+      },
 
-      product: [{
+      product: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'product'
-      }]
+        ref: 'product',
+        required:true
+      }
     },
 
   ],

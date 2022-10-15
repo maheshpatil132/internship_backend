@@ -6,13 +6,13 @@ const app = express.Router()
 
 
 // seller Routes
-const CreateSeller = app.post('/new/seller', isAutharization , autherizesrole('admin') , createseller)
-const UpdateSeller = app.put('/update/seller/:id', updateseller)
+const CreateSeller = app.post('/new/seller', isAdmin, createseller)
+const UpdateSeller = app.put('/update/seller/:id',isAutharization, autherizesrole('seller','admin') , updateseller)
 const LoginSeller = app.post('/login/seller', loginseller)
 const DeleteSeller = app.post('/delete/seller/:id', isAdmin, deleteseller)
 const AddProdRequest = app.post('/addprod/:id', isSeller, addrequest)
-const Getsingleseller = app.get("/get/singleseller/:id", isSeller, getsingleseller)
-const GetAllseller = app.get("/getall/sellers", isAdmin, getsellers)
+const Getsingleseller = app.get("/seller/:id",isAutharization, autherizesrole('seller','admin') , getsingleseller)
+const GetAllseller = app.get("/getall/sellers" ,isAutharization, autherizesrole('seller','admin'), getsellers)
 const SendCreateReq = app.post('/send/createreq' , signuprequest)
 const Sellerquote = app.put("/seller/quote/:id", isSeller, sellerquote)
 const Getallsellerquote = app.get(
@@ -26,4 +26,4 @@ const SignUpSeller = app.put('/request/signup', signuprequest)
 
 
 
-module.exports = { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote , GetAllseller , SendCreateReq}
+module.exports = { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote , GetAllseller , SendCreateReq ,UpdateSeller}

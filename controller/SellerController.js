@@ -11,7 +11,7 @@ const AdminModel = require("../models/AdminModel");
 
 // send create request
 exports.signuprequest = catchaysnc(async(req,res,next)=>{
-  const email = "hiren@gmail.com"
+  const email = "maqure@gmail.com"
   const request = await admin.findOneAndUpdate({email:email},
       {
         $push:{
@@ -37,7 +37,7 @@ exports.createseller = catchaysnc(async(req,res,next)=>{
     await seller.save()
   
     // time to delete the seller req
-    const admin = await AdminModel.findOneAndUpdate({email:"hiren@gmail.com"},{
+    const admin = await AdminModel.findOneAndUpdate({email:"maqure@gmail.com"},{
       $pull:{
         sellerReq:{
           email:req.body.email
@@ -66,13 +66,13 @@ exports.addrequest = catchaysnc(async(req,res,next)=>{
     product:id
    }
   // add request
-  const request = await admin.findOne({email:"hiren@gmail.com"})
+  const request = await admin.findOneAndUpdate({email:process.env.Admin_email} ,{$push:{
+      AddprodReq : data
+  }})
 
   if(!request){
     return next(new Errorhandler("not",404))
   }
-
-  await request.AddprodReq.push(data)
 
 
   await request.save()
@@ -87,11 +87,18 @@ exports.addrequest = catchaysnc(async(req,res,next)=>{
 
 // update seller
 exports.updateseller = catchaysnc(async(req,res,next)=>{
-    const seller = await db.findByIdAndUpdate(req.params.id,req.body,{new:true})
+  
+    const seller = await db.findByIdAndUpdate(req.params.id,{...req.body},{new:true})
     if(!seller){
         return next(new Errorhandler('seller not Found',404))
     }
     await seller.save()
+
+    res.status(200).json({
+      success:true,
+      message:"profile updated successfully",
+      user:seller
+    })
 })
 
 // delete seller
@@ -157,7 +164,7 @@ exports.getsingleseller = catchaysnc(async(req,res,next)=>{
     return next("user not found",404)
   }
   
-  res.status.json({
+  res.status(200).json({
     success : true,
     seller
   })

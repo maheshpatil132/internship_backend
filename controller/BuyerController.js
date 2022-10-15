@@ -32,7 +32,7 @@ exports.getsinglebuyer = catchaysnc(async(req,res,next)=>{
     return next("user not found",404)
   }
   
-  res.status.json({
+  res.status(200).json({
     success : true,
     buyer
   })
@@ -88,12 +88,15 @@ exports.logoutbuyer = catchaysnc(async (req, res, next) => {
 
 // update Buyer profile
 exports.Updatebuyer = catchaysnc(async(req,res,next)=>{
-  const buyer = await db.findByIdAndUpdate(req.buyer.id,req.body,{new:true})
-  if(!buyer){
+  const {id} = req.params
+  const user = await db.findByIdAndUpdate(id,{...req.body} ,{new:true})
+  if(!user){
     return next(new Errorhandler('user not Found',404))
   }
-  await buyer.save({validateBeforeSave:false})
-sendtoken(buyer,200,res)
+  await user.save({validateBeforeSave:false})
+ sendtoken(user,200,res)
+
+
 })
 
 

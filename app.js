@@ -8,7 +8,7 @@ const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuye
 const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct, Get8Product } = require('./routes/ProductRoutes');
 const error = require('./middleware/error');
 const cookieParser = require("cookie-parser");
-const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote, GetAllseller, SendCreateReq } = require('./routes/sellerRoutes');
+const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote, GetAllseller, SendCreateReq, UpdateSeller } = require('./routes/sellerRoutes');
 const { CreateAdmin, LoginAdmin, ApproveSeller, RejectSeller, AddProduct, GetAllSellerRequest, GetAllProdRequest, Rejectorder, Adminclickprocess, Sendrfqadmin, Adminupdateprice } = require('./routes/AdminRoutes');
 const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, SellerUpdates, GetAllQuotes, GetQuote, AdminAccepted } = require('./routes/OrderRoutes');
 
@@ -33,6 +33,26 @@ dotenv.config({ path: './configure/app.env' })
 const PORT = process.env.PORT || 5000
 
 
+require("dotenv").config({path: "./app.env"});
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require("twilio")(accountSid, authToken);
+
+app.post("/send/otp", async (req, res) => {
+  console.log(req.body.mobile);
+  await client.verify.v2
+    .services("VAeef441a312c66361c551e075ef2b452a")
+    .verifications.create({ to:req.body.mobile , channel: "sms" })
+    .then((verification) => console.log(verification.status));
+});
+
+app.post("/varify/otp", async (req, res) => {
+  console.log(req.body);
+  await client.verify.v2
+    .services("VAeef441a312c66361c551e075ef2b452a")
+    .verificationChecks.create({ to:req.body.mobile , code: req.body.otp })
+    .then((verification_check) => res.send(verification_check.status));
+});
 
 // product routes
 app.use(CreateProduct)
@@ -69,6 +89,7 @@ app.use(Sellerquote)
 app.use(Getallsellerquote)
 app.use(GetAllseller)
 app.use(SendCreateReq)
+app.use(UpdateSeller)
 
 
 

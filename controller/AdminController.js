@@ -52,7 +52,7 @@ exports.aproveseller = catchaysnc(async(req,res,next)=>{
   await seller.save()
 
   // delete request
-  const admin = await db.findOne({email:"hiren@gmail.com"})
+  const admin = await db.findOne({email:process.env.Admin_email})
   
   const result = admin.sellerReq.filter(re=>re._id.toString() !== id.toString())
  
@@ -75,7 +75,7 @@ exports.rejectseller = catchaysnc(async(req,res,next)=>{
   await seller.save()
 
   // delete request
-  const admin = await db.findOne({email:"hiren@gmail.com"})
+  const admin = await db.findOne({email:process.env.Admin_email})
   
   const result = admin.sellerReq.filter(re=>re._id.toString() !== id.toString())
   
@@ -89,10 +89,11 @@ exports.rejectseller = catchaysnc(async(req,res,next)=>{
 exports.addproduct = catchaysnc(async(req,res,next)=>{
 
   const addreq = req.body
-  const user = await SellerModel.findByIdAndUpdate(addreq.seller , {$push:{
+  console.log(addreq)
+  const user = await SellerModel.findByIdAndUpdate(addreq.sellers , {$push:{
     products : addreq.product
   }} , {new:true})
-  const products = await ProductModel.findByIdAndUpdate(addreq.product ,{$push:{
+  const products = await ProductModel.findByIdAndUpdate(addreq.products ,{$push:{
      sellers: addreq.seller
   }} , {new:true})
   
@@ -118,7 +119,7 @@ exports.addproduct = catchaysnc(async(req,res,next)=>{
 
 // get all seller request
 exports.getallsellerrequest = catchaysnc(async (req,res,next)=>{
-  const email = "hiren@gmail.com"
+  const email = process.env.Admin_email
   const admin = await db.findOne({email:email}).populate('sellerReq')
   if(!admin){
     return next(new Errorhandler('admin not found',404))
@@ -132,7 +133,7 @@ exports.getallsellerrequest = catchaysnc(async (req,res,next)=>{
 
 // get all add prod request
 exports.getalladdprodrequest = catchaysnc(async (req,res,next)=>{
-  const email = "hiren@gmail.com"
+  const email = process.env.Admin_email
   const addrequs = await db.findOne({email:email},{Addreqs:1}).populate('AddprodReq.seller').populate('AddprodReq.product')
   if(!addrequs){
     return next(new Errorhandler('something Went Wrong',404))

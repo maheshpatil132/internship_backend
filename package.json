@@ -21,6 +21,7 @@
     "mongoose": "^6.5.5",
     "nodemon": "^2.0.19",
     "socket.io": "^4.5.2",
+    "twilio": "^3.82.2",
     "validator": "^13.7.0"
   }
 }
