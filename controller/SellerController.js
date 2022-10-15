@@ -11,7 +11,7 @@ const AdminModel = require("../models/AdminModel");
 
 // send create request
 exports.signuprequest = catchaysnc(async(req,res,next)=>{
-  const email = "maqure@gmail.com"
+  const email = process.env.Admin_email
   const request = await admin.findOneAndUpdate({email:email},
       {
         $push:{

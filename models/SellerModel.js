@@ -35,10 +35,7 @@ gst:{
   type:String,
   required:true
 },
-ownername:{
-  type:String,
-  required:true
-},
+
 mobile:{
   type:Number,
   required:true

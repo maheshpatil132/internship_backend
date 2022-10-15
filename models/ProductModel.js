@@ -8,35 +8,27 @@ const Products = new Schema({
     },
     Substance: {
         type: String,
-        required:true,
     },
     CASNo: {
         type: String,
-        required:true,
     },
     EINECS: {
         type: String,
-        required:true,
     },
     MinPurity: {
         type: String,
-        required:true,
     },
     Color: {
         type: String,
-        required:true,
     },
     Apperance: {
         type: String,
-        required:true,
     },
     Category: {
         type: String,
-        required:true,
     },
     Synonyms: {
         type: String,
-        required:true,
     },
     desc: {
         type: String,

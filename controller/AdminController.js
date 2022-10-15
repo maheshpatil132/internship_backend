@@ -97,6 +97,21 @@ exports.addproduct = catchaysnc(async(req,res,next)=>{
      sellers: addreq.seller
   }} , {new:true})
   
+
+  const requests = await db.findOneAndUpdate({email:process.env.Admin_email}, {
+    $pull:{
+      AddprodReq: { 
+        seller: addreq.sellers,
+        product: addreq.products
+      }
+    }
+  }).populate('AddprodReq.seller').populate('AddprodReq.product')
+
+  if(!requests){
+    return next(new Errorhandler(404,"something went wrong"))
+  }
+
+  await requests.save()
    
   if(!user){
     return next(new Errorhandler('seller not exist',404))
@@ -110,7 +125,8 @@ exports.addproduct = catchaysnc(async(req,res,next)=>{
    
    res.status(200).json({
     sucess:true,
-    message:"product added sucessfully"
+    message:"product added sucessfully",
+    requests
    })
 })
 
