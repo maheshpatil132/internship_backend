@@ -10,41 +10,33 @@ const BuyerModel = mongoose.Schema({
   },
   employees: {
     type: Number,
-    required: true
   },
   address:{
     type:String
   },
   Category: {
     type: String,
-    required: true
   },
   Area: {
     type: String,
-    required: true
   },
   cin: {
     type: String,
-    required: true
   },
   gst: {
     type: String,
-    required: true
   },
   ownername: {
     type: String,
-    required: true
   },
   capacity: {
     type: String,
-    required: true
   },
   linkedin: {
     type: String,
   },
   about: {
     type: String,
-    required: true
   },
   companyName: {
     type: String,
@@ -62,7 +54,6 @@ const BuyerModel = mongoose.Schema({
   mobile: {
     type: Number,
     length: 10,
-    required: true
   },
   role: {
     type: String,

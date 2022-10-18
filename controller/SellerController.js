@@ -56,7 +56,7 @@ exports.createseller = catchaysnc(async(req,res,next)=>{
 // Add product request
 exports.addrequest = catchaysnc(async(req,res,next)=>{
   const {id} = req.params
-  const seller = await db.findById(req.user._id)
+  const seller = await db.findById(req.user.id)
 
   if(!seller){
     return next(new Errorhandler("seller not found",404))
@@ -189,9 +189,9 @@ exports.getsellers = catchaysnc(async(req,res,next)=>{
 exports.sellerquote = catchaysnc(async (req, res, next) => {
   let updateprice;
 
-  const sellerid = req.user._id;
+  const sellerid = req.user.id;
   const kimat = req.body.kimat;
-  console.log(kimat)
+
   
   const orderid = req.params.id;
 
@@ -220,14 +220,13 @@ exports.sellerquote = catchaysnc(async (req, res, next) => {
 
 
 exports.getallsellerquote = catchaysnc(async (req, res, next) => {
-  const quotes = await db
-    .findById(req.user._id, { bids: 1 })
-    .populate('bids')
-    .populate('bids.product')
-  const sellerid = req.user._id
+
+  const quotes = await db.findById(req.user.id, { bids: 1 }).populate('bids').populate('bids.product')
+
   if (!quotes) {
     return next(new Errorhandler('bids not exist', 404))
   }
+  const sellerid = req.user.id
   const bids = await quotes.bids
   res.status(200).json({
     success: true,

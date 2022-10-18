@@ -12,7 +12,7 @@ const Errorhandler = require("../utils/errorhandler");
 exports.createorder = catchaysnc(async (req, res, next) => {
     const { product, quantity , buyer_pincode , remark} = req.body
     const data = {
-        buyer: req.user._id,
+        buyer: req.user.id,
         product,
         quantity,
         buyer_pincode,
@@ -21,7 +21,7 @@ exports.createorder = catchaysnc(async (req, res, next) => {
     const order = new db({ ...data })
    
 
-    const buyer = await BuyerModel.findByIdAndUpdate(req.user._id , {$push:{
+    const buyer = await BuyerModel.findByIdAndUpdate(req.user.id , {$push:{
         bids : order._id
     }})
    
@@ -89,7 +89,7 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
     const { price } = req.body
 
     const data = {
-        seller: req.user._id,
+        seller: req.user.id,
         price
     }
     const order = await db.findById(req.body.id)
@@ -98,12 +98,12 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
         return next(new Errorhandler('order not found', 404))
     }
 
-    const isBided = order.bids.find(rev => rev.seller.toString() === req.user._id.toString())
+    const isBided = order.bids.find(rev => rev.seller.toString() === req.user.id.toString())
 
     if (isBided) {
 
         order.bids.forEach(rev => {
-            if (rev.seller.toString() === req.user._id.toString()) {
+            if (rev.seller.toString() === req.user.id.toString()) {
                 rev.price = price
             }
         })

@@ -86,10 +86,10 @@ app.use(DeleteSeller)
 app.use(AddProdRequest)
 app.use(Getsingleseller)
 app.use(Sellerquote)
-app.use(Getallsellerquote)
 app.use(GetAllseller)
 app.use(SendCreateReq)
 app.use(UpdateSeller)
+app.use(Getallsellerquote)
 
 
 
